@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kyc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kyc
+  template:
+    metadata:
+      labels:
+        app: kyc
+    spec:
+      containers:
+      - name: kyc
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kyc-service
+spec:
+  type: ClusterIP
+  selector:
+    app: kyc
+  ports:
+    - port: 80
+      targetPort: 80
